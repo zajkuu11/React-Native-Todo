@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {View, ScrollView, StyleSheet, Text} from 'react-native';
+import {View, ScrollView, StyleSheet} from 'react-native';
 import Heading from './Heading';
 import Input from './TextInput';
 import Button from './Button';
 import TodoList from './TodoList';
+import TabBar from './TabBar';
 
 let todoIndex = 0;
 
@@ -18,6 +19,7 @@ export default class App extends Component {
     this.submitTodo = this.submitTodo.bind(this);
     this.toggleComplete = this.toggleComplete.bind(this);
     this.deleteTodo = this.deleteTodo.bind(this);
+    this.setType = this.setType.bind(this);
   }
 
   inputChange(inputValue) {
@@ -57,8 +59,12 @@ export default class App extends Component {
     this.setState({todos});
   }
 
+  setType(type) {
+    this.setState({type});
+  }
+
   render() {
-    let {inputValue, todos} = this.state;
+    let {inputValue, todos, type} = this.state;
     return (
       <View style={styles.container}>
         <ScrollView keyboardShouldPersistTaps="always" style={styles.content}>
@@ -72,10 +78,12 @@ export default class App extends Component {
               toggleComplete={this.toggleComplete}
               deleteTodo={this.deleteTodo}
               todos={todos}
+              type={type}
             />
             <Button submitTodo={this.submitTodo} />
           </View>
         </ScrollView>
+        <TabBar type={type} setType={this.setType} />
       </View>
     );
   }
